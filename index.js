@@ -29,7 +29,8 @@ const main = async () => {
                 if (!title || !price || !category) {
                     throw new Error("Faltan argumentos: título, precio y categoría requeridos");
                 }
-                print(await createProduct(title, price, category).then((r) => r.data));
+                const newProduct = { title, price, category };
+                print(await createProduct(...Object.values({ ...newProduct })).then((r) => r.data));
                 break;
             }
 
