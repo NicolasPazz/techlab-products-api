@@ -1,4 +1,4 @@
-import * as authService from '../services/auth.service.js';
+import * as authService from "../services/auth.service.js";
 
 export const login = async (req, res, next) => {
     try {
@@ -7,24 +7,24 @@ export const login = async (req, res, next) => {
         if (!username || !password) {
             return res.status(400).json({
                 success: false,
-                error: 'Usuario y contraseña son requeridos'
+                error: "Usuario y contraseña son requeridos",
             });
         }
 
         const token = await authService.authenticateUser(username, password);
-        
+
         res.json({
             success: true,
             data: {
                 token,
-                type: 'Bearer'
-            }
+                type: "Bearer",
+            },
         });
     } catch (error) {
-        if (error.message.includes('credenciales')) {
+        if (error.message.includes("credenciales")) {
             return res.status(401).json({
                 success: false,
-                error: error.message
+                error: error.message,
             });
         }
         next(error);

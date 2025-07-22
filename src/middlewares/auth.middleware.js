@@ -1,4 +1,4 @@
-import { verifyToken, extractBearerToken } from '../utils/jwt.js';
+import { verifyToken, extractBearerToken } from "../utils/jwt.js";
 
 export const authenticateToken = (req, res, next) => {
     try {
@@ -7,27 +7,27 @@ export const authenticateToken = (req, res, next) => {
         if (!authHeader) {
             return res.status(401).json({
                 success: false,
-                error: 'Token de acceso requerido'
+                error: "Token de acceso requerido",
             });
         }
 
         const token = extractBearerToken(authHeader);
-        
+
         if (!token) {
             return res.status(401).json({
                 success: false,
-                error: 'Token de acceso inválido'
+                error: "Token de acceso inválido",
             });
         }
 
         const decoded = verifyToken(token);
         req.user = decoded;
-        
+
         next();
     } catch (error) {
         return res.status(403).json({
             success: false,
-            error: 'Token inválido o expirado'
+            error: "Token inválido o expirado",
         });
     }
 };
