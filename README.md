@@ -135,24 +135,3 @@ JWT_SECRET=un-jwt-secret-super-seguro-para-produccion
 JWT_EXPIRATION=1h
 # Firebase config aquí...
 ```
-
-## 👥 Contribución
-
-1. Fork del proyecto
-2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
-
-## 📄 Licencia
-
-ISC License - Ver archivo LICENSE para más detalles.
-
-## 👨‍💻 Autor
-
-**TechLab Team**  
-Proyecto Final - Clase 15 - Node.js
-
----
-
-⭐ ¡Si este proyecto te fue útil, no olvides darle una estrella!
