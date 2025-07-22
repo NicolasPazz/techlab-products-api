@@ -1,18 +1,26 @@
-import { collection, getDocs, doc, getDoc, addDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../config/firebase.config.js';
+import {
+    collection,
+    getDocs,
+    doc,
+    getDoc,
+    addDoc,
+    deleteDoc,
+    updateDoc,
+} from "firebase/firestore";
+import { db } from "../config/firebase.config.js";
 
-const COLLECTION_NAME = 'products';
+const COLLECTION_NAME = "products";
 
 export const findAll = async () => {
     try {
         const productsCollection = collection(db, COLLECTION_NAME);
         const productsSnapshot = await getDocs(productsCollection);
-        
+
         const products = [];
         productsSnapshot.forEach((doc) => {
             products.push({
                 id: doc.id,
-                ...doc.data()
+                ...doc.data(),
             });
         });
 
@@ -28,12 +36,12 @@ export const findById = async (id) => {
         const productSnapshot = await getDoc(productDoc);
 
         if (!productSnapshot.exists()) {
-            throw new Error('Producto no encontrado');
+            throw new Error("Producto no encontrado");
         }
 
         return {
             id: productSnapshot.id,
-            ...productSnapshot.data()
+            ...productSnapshot.data(),
         };
     } catch (error) {
         throw error;
@@ -43,17 +51,42 @@ export const findById = async (id) => {
 export const create = async (productData) => {
     try {
         const productsCollection = collection(db, COLLECTION_NAME);
-        
+
         const newProduct = {
             nombre: productData.nombre,
-            precio: productData.precio
+            precio: productData.precio,
         };
 
         const docRef = await addDoc(productsCollection, newProduct);
-        
+
         return {
             id: docRef.id,
-            ...newProduct
+            ...newProduct,
+        };
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const update = async (id, productData) => {
+    try {
+        const productDoc = doc(db, COLLECTION_NAME, id);
+        const productSnapshot = await getDoc(productDoc);
+
+        if (!productSnapshot.exists()) {
+            throw new Error("Producto no encontrado");
+        }
+
+        const updatedData = {
+            nombre: productData.nombre,
+            precio: productData.precio,
+        };
+
+        await updateDoc(productDoc, updatedData);
+
+        return {
+            id: id,
+            ...updatedData,
         };
     } catch (error) {
         throw error;
@@ -66,7 +99,7 @@ export const remove = async (id) => {
         const productSnapshot = await getDoc(productDoc);
 
         if (!productSnapshot.exists()) {
-            throw new Error('Producto no encontrado');
+            throw new Error("Producto no encontrado");
         }
 
         await deleteDoc(productDoc);

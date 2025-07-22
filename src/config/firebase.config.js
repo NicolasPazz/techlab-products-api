@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { envs } from './envs.js';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { envs } from "./envs.js";
 
 const firebaseConfig = {
     apiKey: envs.FIREBASE_API_KEY,
@@ -9,7 +9,7 @@ const firebaseConfig = {
     storageBucket: envs.FIREBASE_STORAGE_BUCKET,
     messagingSenderId: envs.FIREBASE_MESSAGING_SENDER_ID,
     appId: envs.FIREBASE_APP_ID,
-    measurementId: envs.FIREBASE_MEASUREMENT_ID
+    measurementId: envs.FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
