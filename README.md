@@ -36,7 +36,7 @@ Autentica un usuario y devuelve un Bearer token.
 ```bash
 curl -X POST https://techlab-products-api.vercel.app/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username": "admin", "password": "********"}'
+  -d '{"username": "techlab", "password": "techlab2025"}'
 ```
 
 **Response (200):**
@@ -50,9 +50,9 @@ curl -X POST https://techlab-products-api.vercel.app/auth/login \
 }
 ```
 
-**Credenciales de prueba:**
-- 👤 **Admin**: `username: admin`, `password: ********`
-- 👤 **User**: `username: techlab`, `password: techlab2025`
+**Credenciales de demo (solo lectura):** `username: techlab`, `password: techlab2025`
+
+Las operaciones de escritura (crear, actualizar, eliminar) requieren el rol **admin**, cuyas credenciales se configuran por variables de entorno (`ADMIN_USERNAME` / `ADMIN_PASSWORD`) y no son públicas.
 
 ---
 
@@ -211,6 +211,10 @@ Crear archivo `.env`:
 PORT=3000
 JWT_SECRET=tu_jwt_secret_super_seguro
 JWT_EXPIRATION=1h
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=una_password_segura
+DEMO_USERNAME=techlab
+DEMO_PASSWORD=techlab2025
 FIREBASE_API_KEY=tu_api_key
 FIREBASE_AUTH_DOMAIN=tu-proyecto.firebaseapp.com
 FIREBASE_PROJECT_ID=tu-proyecto-id
@@ -248,10 +252,10 @@ src/
 ### 1. Flujo completo de autenticación y CRUD
 
 ```bash
-# 1. Obtener token
+# 1. Obtener token (crear/actualizar/eliminar requieren rol admin)
 TOKEN=$(curl -s -X POST https://techlab-products-api.vercel.app/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"********"}' | \
+  -d '{"username":"'"$ADMIN_USERNAME"'","password":"'"$ADMIN_PASSWORD"'"}' | \
   grep -o '"token":"[^"]*' | cut -d'"' -f4)
 
 # 2. Listar productos

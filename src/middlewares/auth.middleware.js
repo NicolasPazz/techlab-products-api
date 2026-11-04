@@ -31,3 +31,13 @@ export const authenticateToken = (req, res, next) => {
         });
     }
 };
+
+export const requireRole = (role) => (req, res, next) => {
+    if (req.user?.role !== role) {
+        return res.status(403).json({
+            success: false,
+            error: "No tenés permisos para realizar esta acción",
+        });
+    }
+    next();
+};

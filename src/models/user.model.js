@@ -1,17 +1,11 @@
+import { envs } from "../config/envs.js";
+
+// Las credenciales se definen por variables de entorno (ver .env.example).
+// El usuario admin tiene acceso completo; el usuario demo es de solo lectura.
 const users = [
-    {
-        id: "1",
-        username: "admin",
-        password: "********",
-        role: "admin",
-    },
-    {
-        id: "2",
-        username: "techlab",
-        password: "techlab2025",
-        role: "user",
-    },
-];
+    { id: "1", username: envs.ADMIN_USERNAME, password: envs.ADMIN_PASSWORD, role: "admin" },
+    { id: "2", username: envs.DEMO_USERNAME, password: envs.DEMO_PASSWORD, role: "user" },
+].filter((u) => u.username && u.password);
 
 export const validateCredentials = async (username, password) => {
     const user = users.find(
